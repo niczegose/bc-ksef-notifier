@@ -1,0 +1,38 @@
+spring:
+  application:
+   name: ksef-notifier
+  cloud:
+    gcp:
+      project-id: ${KSEF_NOTIFIER_PROJECT_ID}
+  datasource:
+    url: jdbc:h2:mem:batchdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+  batch:
+    jdbc:
+      initialize-schema: always
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${KSEF_NOTIFIER_EMAIL}
+    password: ${KSEF_NOTIFIER_EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+server:
+  forward-headers-strategy: NATIVE
+  port: ${PORT:8080}
+
+ksef:
+  config:
+    base-uri: "https://api.ksef.mf.gov.pl"
+    suffix-uri: "v2"
+    qr-uri: "https://qr.ksef.mf.gov.pl"
+    request-timeout: 100
+  context:
+    nip: ${NIP}
+    token: ${KSEF_TOKEN}
+    notification-email: ${NOTIFICATION_EMAIL}
