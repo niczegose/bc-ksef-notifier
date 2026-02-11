@@ -12,4 +12,5 @@ public class KsefClientProperties {
     private String nip;
     private String token;
     private String notificationEmail;
+    private int checkIntervalInDays;
 }

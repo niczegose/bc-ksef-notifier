@@ -63,7 +63,7 @@ public class KsefService {
             .withSubjectType(InvoiceQuerySubjectType.SUBJECT2)
             .withDateRange(
                 new InvoiceQueryDateRange(InvoiceQueryDateType.PERMANENTSTORAGE,
-                    OffsetDateTime.now().minusDays(1),
+                    OffsetDateTime.now().minusDays(ksefClientProperties.getCheckIntervalInDays()),
                     OffsetDateTime.now()))
             .build();
 
@@ -72,12 +72,16 @@ public class KsefService {
         return response.getInvoices();
     }
 
+    public byte[] getInvoiceByKsefId(String ksefId, String sessionToken) throws ApiException {
+        return ksefClient.getInvoice(ksefId, sessionToken);
+    }
+
     @Retryable(
         retryFor = {
             ProcessingException.class,
         }, maxAttempts = 2,
         recover = "recoverAuthReadyStatusCheck",
-        backoff = @Backoff(delay = 30)
+        backoff = @Backoff(delay = 5000L)
 
     )
     public void isAuthStatusReady(String referenceNumber, String tempToken) throws ApiException {

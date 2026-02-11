@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    gcp:
+      project-id: demo
+  mail:
+    username: a@gmail.com
+
+ksef:
+  context:
+    nip: 1234567890
+    notification-email: b@gmail.com

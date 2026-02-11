@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
+        .invoice-card {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 600px;
+        }
+        .invoice-header {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #e0e0e0;
+            color: #0056b3;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .label {
+            background-color: #fafafa;
+            width: 40%;
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        .value {
+            width: 60%;
+            text-align: right;
+            font-weight: 500;
+        }
+        .total { color: #d9534f; font-weight: bold; }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="summary-header">Zestawienie faktur pobranych z KSeF:</div>
+<br/>
+
+<div th:each="inv : ${invoices}" class="invoice-card">
+    <div class="invoice-header">
+        Faktura KSeF o identyfikatorze: <span th:text="${inv.metadata.ksefNumber}"></span>
+    </div>
+    <table>
+        <tr>
+            <td class="label">Sprzedawca</td>
+            <td class="value" th:text="${inv.metadata.seller.name}"></td>
+        </tr>
+        <tr>
+            <td class="label">Nr faktury</td>
+            <td class="value" th:text="${inv.metadata.invoiceNumber}"></td>
+        </tr>
+        <tr>
+            <td class="label">Kwota Brutto</td>
+            <td class="value total">
+                <span th:text="${#numbers.formatDecimal(inv.metadata.grossAmount, 1, 'WHITESPACE', 2, 'COMMA')}"></span>
+                <span th:text="${inv.metadata.currency}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">Data wystawienia</td>
+            <td class="value" th:text="${#temporals.format(inv.metadata.issueDate, 'yyyy-MM-dd')}"></td>
+        </tr>
+        <tr>
+            <td class="label">Termin płatności</td>
+            <td class="value total" th:text="${#temporals.format(inv.dueDate, 'yyyy-MM-dd')}"></td>
+        </tr>
+        <tr>
+            <td class="label">Nr rachunku bankowego</td>
+            <td class="value" th:text="${inv.accountNumber}"></td>
+        </tr>
+    </table>
+</div>
+<p style="font-size: 12px; color: #847d7d;">
+    Wszystkie powyższe faktury zostały dołączone do niniejszej wiadomości w formacie XML.
+</p>
+
+<footer>
+    <p>KSeF Notifier © 2026 Developed and maintained by <strong>BaseCode</strong>.</p>
+</footer>
+</body>
+</html>

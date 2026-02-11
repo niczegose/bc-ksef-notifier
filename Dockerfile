@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -y maven && \
     rm -rf /var/lib/apt/lists/*
 
+COPY lombok.config lombok.config
 COPY pom.xml .
 COPY src ./src
 

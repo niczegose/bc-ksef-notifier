@@ -36,3 +36,4 @@ ksef:
     nip: ${NIP}
     token: ${KSEF_TOKEN}
     notification-email: ${NOTIFICATION_EMAIL}
+    check-interval-in-days: 1
