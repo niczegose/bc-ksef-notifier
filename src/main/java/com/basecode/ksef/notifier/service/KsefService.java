@@ -5,6 +5,7 @@ import com.basecode.ksef.notifier.exception.ProcessingException;
 import java.time.OffsetDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.retry.annotation.Backoff;
@@ -26,7 +27,6 @@ import pl.akmf.ksef.sdk.client.model.invoice.InvoiceQueryDateRange;
 import pl.akmf.ksef.sdk.client.model.invoice.InvoiceQueryDateType;
 import pl.akmf.ksef.sdk.client.model.invoice.InvoiceQueryFilters;
 import pl.akmf.ksef.sdk.client.model.invoice.InvoiceQuerySubjectType;
-import pl.akmf.ksef.sdk.client.model.invoice.QueryInvoiceMetadataResponse;
 import pl.akmf.ksef.sdk.client.model.util.SortOrder;
 
 @Slf4j
@@ -58,18 +58,25 @@ public class KsefService {
             .getToken();
     }
 
-    public List<InvoiceMetadata> getInvoicesFromYesterday(String sessionToken) throws ApiException {
+    public List<InvoiceMetadata> getInvoices(String sessionToken) throws ApiException {
+        return Stream.concat(
+            fetchInvoicesGroup(sessionToken, true).stream(),
+            fetchInvoicesGroup(sessionToken, false).stream()
+        ).toList();
+    }
+
+    private List<InvoiceMetadata> fetchInvoicesGroup(String sessionToken, boolean withAttachment) throws ApiException {
         InvoiceQueryFilters request = new InvoiceQueryFiltersBuilder()
             .withSubjectType(InvoiceQuerySubjectType.SUBJECT2)
             .withDateRange(
                 new InvoiceQueryDateRange(InvoiceQueryDateType.PERMANENTSTORAGE,
                     OffsetDateTime.now().minusDays(ksefClientProperties.getCheckIntervalInDays()),
                     OffsetDateTime.now()))
+            .withHasAttachment(withAttachment)
             .build();
 
-        QueryInvoiceMetadataResponse response = ksefClient.queryInvoiceMetadata(0, 20, SortOrder.ASC, request, sessionToken);
-
-        return response.getInvoices();
+        return ksefClient.queryInvoiceMetadata(0, 20, SortOrder.ASC, request, sessionToken)
+            .getInvoices();
     }
 
     public byte[] getInvoiceByKsefId(String ksefId, String sessionToken) throws ApiException {

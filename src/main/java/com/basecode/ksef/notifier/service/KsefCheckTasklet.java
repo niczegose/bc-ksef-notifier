@@ -39,7 +39,7 @@ public class KsefCheckTasklet implements Tasklet {
             var sessionToken = ksefService.redeemToken(loginResponse.getAuthenticationToken().getToken());
 
             log.info("Pobieranie listy faktur...");
-            var invoices = ksefService.getInvoicesFromYesterday(sessionToken);
+            var invoices = ksefService.getInvoices(sessionToken);
 
             if (!invoices.isEmpty()) {
                 log.debug("fakturka {}", invoices.getFirst().getSeller().getName());

@@ -11,7 +11,7 @@
 
 	<groupId>com.basecode</groupId>
 	<artifactId>ksef-notifier</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>ksef-notifier</name>
 	<description>batch service notifying about a new invoice</description>
 
