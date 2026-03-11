@@ -1,6 +1,7 @@
 spring:
   application:
-   name: ksef-notifier
+    name: ksef-notifier
+    version: "@project.version@"
   cloud:
     gcp:
       project-id: ${KSEF_NOTIFIER_PROJECT_ID}

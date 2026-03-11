@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pl-PL">
 <head>
     <style>
         body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
@@ -82,11 +82,14 @@
     </table>
 </div>
 <p style="font-size: 12px; color: #847d7d;">
-    Wszystkie powyższe faktury zostały dołączone do niniejszej wiadomości w formacie XML.
+    Wszystkie powyższe faktury zostały dołączone do niniejszej wiadomości w formacie XML oraz wizualizacje faktur VAT w formacie PDF.
+</p>
+<p style="font-size: 13px; color: #5e3d3d;">
+    Uwaga: Jeśli faktura jest innego typu niż VAT, np. KOR (korygująca) jej wizualizacja w formacie PDF nie jest (aktualnie) generowana.
 </p>
 
 <footer>
-    <p>KSeF Notifier © 2026 <strong>BaseCode</strong>.</p>
+    <p>KSeF Notifier v<span th:text="${appVersion}"></span> © 2026 <strong>BaseCode</strong></p>
 </footer>
 </body>
 </html>

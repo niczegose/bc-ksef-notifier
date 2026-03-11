@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.EnableRetry;
 import pl.akmf.ksef.sdk.api.DefaultKsefClient;
 import pl.akmf.ksef.sdk.api.services.DefaultCryptographyService;
+import pl.akmf.ksef.sdk.api.services.DefaultQrCodeService;
 import pl.akmf.ksef.sdk.client.interfaces.KSeFClient;
+import pl.akmf.ksef.sdk.client.interfaces.QrCodeService;
 
 @EnableRetry
 @Configuration
@@ -39,5 +41,10 @@ public class KsefClientConfig {
     @Bean
     public DefaultCryptographyService defaultCryptographyService(KSeFClient kSeFClient) {
         return new DefaultCryptographyService(kSeFClient);
+    }
+
+    @Bean
+    public QrCodeService qrCodeService() {
+        return new DefaultQrCodeService();
     }
 }

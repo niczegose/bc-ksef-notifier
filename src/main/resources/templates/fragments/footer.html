@@ -1,0 +1,39 @@
+<div th:fragment="footer(fa)">
+    <div th:if="${fa.stopka != null}">
+        <div class="section-title">Pozostałe dane na fakturze</div>
+        <div style="font-size: 7pt;" th:if="${fa.stopka.rejestry != null}">
+            <h3>Rejestry i bazy danych:</h3>
+
+            <div th:each="reg : ${fa.stopka.rejestry}">
+                <div th:if="${reg.pelnaNazwa != null}">Pełna nazwa: <span class="value" th:text="${reg.pelnaNazwa}"></span></div>
+                <div th:if="${reg.KRS != null}">KRS: <span class="value" th:text="${reg.KRS}"></span></div>
+                <div th:if="${reg.REGON != null}">REGON: <span class="value" th:text="${reg.REGON}"></span></div>
+                <div th:if="${reg.BDO != null}">BDO: <span class="value" th:text="${reg.BDO}"></span></div>
+                <br/>
+            </div>
+        </div>
+
+        <div style="font-size: 7pt;" th:if="${fa.stopka.informacje != null}">
+            <h3>Pozostałe informacje:</h3>
+
+            <div th:each="reg : ${fa.stopka.informacje}">
+                <div th:if="${reg.stopkaFaktury != null}"><span class="value" th:text="${reg.stopkaFaktury}"></span></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="section-separator" th:fragment="extras(fa)">
+    <div th:if="${fa.naglowek.dataWytworzeniaFa != null}">Data i czas wytworzenia faktury: <span th:text="${fa.naglowek.dataWytworzeniaFa}"></span></div>
+    <div th:if="${fa.naglowek.systemInfo != null}">Nazwa systemu teleinformatycznego, z którego korzysta podatnik: <span
+            th:text="${fa.naglowek.systemInfo}"></span></div>
+
+    <div class="section-separator">
+        <img th:if="${qrCode != null}"
+             th:src="|data:image/png;base64,${qrCode}|"
+             width="100" height="100"
+             alt="Kod QR weryfikacji"/>
+        <div th:if="${ksefNumber != null}">Numer KSeF: <span th:text="${ksefNumber}"></span></div>
+    </div>
+</div>

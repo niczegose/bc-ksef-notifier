@@ -1,0 +1,25 @@
+<div th:fragment="description(fa)">
+    <div class="section-separator" th:if="${fa.fa.dodatkowyOpis != null}">
+        <div class="section-title">Dodatkowy opis</div>
+
+        <table>
+            <caption>Pola przeznaczone dla wykazywania dodatkowych danych na fakturze, w tym wymaganych przepisami prawa, dla których nie przewidziano innych
+                pól/elementów
+            </caption>
+            <tr>
+                <th>Klucz</th>
+                <th>Wartość</th>
+                <th style="width: 60px;">Numer wiersza*</th>
+            </tr>
+            <tr th:each="opis : ${fa.fa.dodatkowyOpis}">
+                <td th:text="${opis.klucz}"></td>
+                <td th:text="${opis.wartosc}"></td>
+                <td th:text="${opis.nrWiersza}"></td>
+            </tr>
+        </table>
+        <div>
+            *<span class="value">Numer wiersza</span> — oznacza numer wiersza faktury lub zamówienia, jeśli informacja odnosi się wyłącznie do danej pozycji
+            faktury
+        </div>
+    </div>
+</div>

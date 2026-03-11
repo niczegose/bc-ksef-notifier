@@ -1,0 +1,8 @@
+<div th:fragment="header(fa)">
+    <div style="text-align: center; border: 2px solid #000; padding: 8px; margin-bottom: 15px;">
+        <h2 style="margin: 0;">FAKTURA <span th:text="${fa.fa.rodzajFaktury}"></span> nr <span th:text="${fa.fa.p2}"></span></h2>
+        <p>Data wystawienia: <span th:text="${fa.fa.p1}"></span></p>
+        <p th:if="${fa.fa.p6 != null}">Data dokonania lub zakończenia dostawy towarów, lub wykonania usługi: <span th:text="${fa.fa.p6}"></span></p>
+        <p th:if="${fa.fa.okresFa != null}">Okres faktury: <span th:text="${fa.fa.okresFa.p6Od}"></span> - <span th:text="${fa.fa.okresFa.p6Do}"></span></p>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div th:fragment="seller(p1)" class="section">
+    <div class="section-title">SPRZEDAWCA</div>
+    <div th:if="${p1.daneIdentyfikacyjne != null}">
+        <div class="value" th:text="${p1.daneIdentyfikacyjne.nazwa}"></div>
+        <div>NIP: <span class="value" th:text="${p1.daneIdentyfikacyjne.NIP}"></span></div>
+    </div>
+    <div th:if="${p1.adres != null}">
+        <br/>
+        <div class="value">Adres podatnika</div>
+        <div>Kod kraju: <span class="value" th:text="${p1.adres.kodKraju}"></span></div>
+        <div>Adres: <span class="value" th:text="${p1.adres.adresL1}"></span></div>
+        <div th:if="${p1.adres.adresL2 != null}"><span class="value" th:text="${p1.adres.adresL2}"></span></div>
+    </div>
+    <div th:if="${p1.adresKoresp != null}">
+        <br/>
+        <div class="value">Adres korespondencyjny nabywcy</div>
+        <div>Kod kraju: <span class="value" th:text="${p1.adresKoresp.kodKraju}"></span></div>
+        <div>Adres: <span class="value" th:text="${p1.adresKoresp.adresL1}"></span></div>
+        <div th:if="${p1.adresKoresp.adresL2 != null}"><span class="value" th:text="${p1.adresKoresp.adresL2}"></span></div>
+    </div>
+    <div th:if="${p1.daneKontaktowe != null}">
+        <div th:each="kontakt : ${p1.daneKontaktowe}">
+            <div th:if="${kontakt.email != null}">Email: <span class="value" th:text="${kontakt.email}"></span></div>
+            <div th:if="${kontakt.telefon != null}">Nr telefonu: <span class="value" th:text="${kontakt.telefon}"></span></div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="buyer(p2)" class="section">
+    <div class="section-title">NABYWCA</div>
+    <div th:if="${p2.daneIdentyfikacyjne != null}">
+        <div class="value" th:text="${p2.daneIdentyfikacyjne.nazwa}"></div>
+        <div>NIP: <span class="value" th:text="${p2.daneIdentyfikacyjne.NIP}"></span></div>
+    </div>
+    <div th:if="${p2.adres != null}">
+        <br/>
+        <div class="value">Adres nabywcy</div>
+        <div>Kod kraju: <span class="value" th:text="${p2.adres.kodKraju}"></span></div>
+        <div>Adres: <span class="value" th:text="${p2.adres.adresL1}"></span></div>
+        <div th:if="${p2.adres.adresL2 != null}"><span class="value" th:text="${p2.adres.adresL2}"></span></div>
+    </div>
+    <div th:if="${p2.adresKoresp != null}">
+        <br/>
+        <div class="value">Adres korespondencyjny nabywcy</div>
+        <div>Kod kraju: <span class="value" th:text="${p2.adresKoresp.kodKraju}"></span></div>
+        <div>Adres: <span class="value" th:text="${p2.adresKoresp.adresL1}"></span></div>
+        <div th:if="${p2.adresKoresp.adresL2 != null}"><span class="value" th:text="${p2.adresKoresp.adresL2}"></span></div>
+    </div>
+    <div th:if="${p2.daneKontaktowe != null}">
+        <div th:each="kontakt : ${p2.daneKontaktowe}">
+            <div th:if="${kontakt.email != null}">Email: <span class="value" th:text="${kontakt.email}"></span></div>
+            <div th:if="${kontakt.telefon != null}">Nr telefonu: <span class="value" th:text="${kontakt.telefon}"></span></div>
+        </div>
+    </div>
+
+    <div th:if="${p2.nrKlienta != null}">Nr klienta: <span class="value" th:text="${p2.nrKlienta}"></span></div>
+    <div th:if="${p2.IDNabywcy != null}">Id nabywcy: <span class="value" th:text="${p2.IDNabywcy}"></span></div>
+
+    <br/>
+    <div>Faktura dotyczy jednostki podrzędniej JST: <span class="value" th:text="${p2.JST.intValue() == 1 ? 'Tak' : 'Nie'}"></span></div>
+    <div>Faktura dotyczy członka GV: <span class="value" th:text="${p2.GV.intValue() == 1 ? 'Tak' : 'Nie'}"></span></div>
+</div>

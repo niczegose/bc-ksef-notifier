@@ -11,7 +11,7 @@
 
 	<groupId>com.basecode</groupId>
 	<artifactId>ksef-notifier</artifactId>
-	<version>1.0.1</version>
+	<version>1.1.0</version>
 	<name>ksef-notifier</name>
 	<description>batch service notifying about a new invoice</description>
 
@@ -19,6 +19,8 @@
 		<java.version>21</java.version>
         <ksef.client.version>2.3.2</ksef.client.version>
         <spring.cloud.gcp.version>7.0.0</spring.cloud.gcp.version>
+        <openhtmltopdf.version>1.0.10</openhtmltopdf.version>
+		<jaxb2.maven.plugin.version>3.1.0</jaxb2.maven.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -68,6 +70,21 @@
             <artifactId>ksef-client</artifactId>
             <version>${ksef.client.version}</version>
         </dependency>
+
+		<dependency>
+			<groupId>com.openhtmltopdf</groupId>
+			<artifactId>openhtmltopdf-pdfbox</artifactId>
+			<version>${openhtmltopdf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -80,6 +97,31 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>${jaxb2.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources>
+						<source>src/main/resources/xsd/schemat.xsd</source>
+					</sources>
+					<xjbSources>
+						<xjbSource>src/main/resources/xsd/bindings.xjb</xjbSource>
+					</xjbSources>
+					<packageName>com.basecode.ksef.notifier.model.fa3</packageName>
+					<arguments>
+						<argument>-nv</argument>
+					</arguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

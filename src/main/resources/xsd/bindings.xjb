@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               jaxb:version="3.0">
+    <jaxb:bindings schemaLocation="schemat.xsd" node="/xsd:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="com.basecode.ksef.notifier.model.fa3" />
+        </jaxb:schemaBindings>
+        <jaxb:bindings node="//xsd:complexType[@name='TAdres']">
+            <jaxb:class name="TAdresLokalny"/>
+        </jaxb:bindings>
+    </jaxb:bindings>
+</jaxb:bindings>

@@ -1,0 +1,30 @@
+<div th:fragment="contract(fa)">
+    <div class="section-separator" th:if="${fa.fa.warunkiTransakcji != null}">
+        <div class="section-title">Warunki transakcji</div>
+
+        <table th:if="${fa.fa.warunkiTransakcji.umowy != null}">
+            <caption>Umowy</caption>
+            <tr>
+                <th>Data umowy</th>
+                <th>Numer umowy</th>
+            </tr>
+            <tr th:each="opis : ${fa.fa.warunkiTransakcji.umowy}">
+                <td class="value" th:text="${opis.dataUmowy}"></td>
+                <td class="value" th:text="${opis.nrUmowy}"></td>
+            </tr>
+        </table>
+
+        <table th:if="${fa.fa.warunkiTransakcji.zamowienia != null}">
+            <caption>Zamówienia</caption>
+            <tr>
+                <th>Data zamówienia</th>
+                <th>Numer zamówienia</th>
+            </tr>
+            <tr th:each="opis : ${fa.fa.warunkiTransakcji.zamowienia}">
+                <td class="value" th:text="${opis.dataZamowienia}"></td>
+                <td class="value" th:text="${opis.nrZamowienia}"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>

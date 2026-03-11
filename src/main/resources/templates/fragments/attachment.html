@@ -1,0 +1,77 @@
+<div th:fragment="attachment(fa)">
+    <div class="section-separator" th:if="${fa.zalacznik != null}">
+        <div class="section-title">Załącznik do faktury VAT</div>
+
+        <div style="font-size: 7pt;"
+             th:each="dane, iterator : ${fa.zalacznik.blokDanych}">
+            <h4>Szczegółowe dane załącznika (<span th:text="${iterator.index + 1}"></span>)</h4>
+
+            <div>Nagłówek bloku danych: <span class="value" th:text="${dane.zNaglowek}"></span></div>
+
+            <table th:if="${dane.metaDane != null}">
+                <caption>Metadane</caption>
+                <tr>
+                    <th>Klucz</th>
+                    <th>Wartość</th>
+                </tr>
+                <tr th:each="meta : ${dane.metaDane}">
+                    <td th:text="${meta.zKlucz}"></td>
+                    <td th:text="${meta.zWartosc}"></td>
+                </tr>
+            </table>
+
+            <div th:if="${dane.tekst != null}">
+                <div th:each="opis, iterOpis : ${dane.tekst.akapit}">
+                    <div>Opis (<span th:text="${iterOpis.index + 1}"></span>):</div>
+                    <div class="value" th:text="${opis}"></div>
+                    <br/>
+                </div>
+            </div>
+
+            <div th:if="${dane.tabela != null}">
+                <h4>Tabela:</h4>
+
+                <div th:each="tabel : ${dane.tabela}">
+                    <div th:if="${tabel.opis != null}">
+                        Opis: <span class="value" th:text="${tabel.opis}"></span>
+                    </div>
+                    <table>
+
+                        <tr>
+                            <th>Klucz</th>
+                            <th>Wartość</th>
+                        </tr>
+                        <tr th:each="tab : ${tabel.tMetaDane}">
+                            <td th:text="${tab.tKlucz}"></td>
+                            <td th:text="${tab.tWartosc}"></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tr>
+                            <td th:each="kolumn : ${tabel.tNaglowek.kol}">
+                                <div class="value" th:text="${kolumn.nKom.value}"></div>
+                            </td>
+                        </tr>
+                        <tr th:each="wiersz : ${tabel.wiersz}">
+                            <td th:each="wartosc : ${wiersz.wKom}">
+                                <div th:text="${wartosc}"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table th:if="${tabel.suma != null}">
+                        <tr>
+                            <td>Podsumowania tabeli</td>
+                        </tr>
+                        <tr>
+                            <td th:each="wartosc : ${tabel.suma.sKom}">
+                                <div th:text="${wartosc}"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

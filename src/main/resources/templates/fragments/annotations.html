@@ -1,0 +1,34 @@
+<div th:fragment="annotations(fa)">
+    <div class="section-separator">
+        <div class="section-title">ADNOTACJE</div>
+        <div style="font-size: 7pt;">
+            <div>Metoda kasowa: <span class="value" th:text="${fa.fa.adnotacje.p16 == 1 ? 'Tak' : 'Nie'}"></span></div>
+            <div>Samofakturowanie: <span class="value" th:text="${fa.fa.adnotacje.p17 == 1 ? 'Tak' : 'Nie'}"></span></div>
+            <div>Odwrotne obciążenie: <span class="value" th:text="${fa.fa.adnotacje.p18 == 1 ? 'Tak' : 'Nie'}"></span></div>
+            <div>Mechanizm podzielonej płatności: <span class="value" th:text="${fa.fa.adnotacje.p18A == 1 ? 'Tak' : 'Nie'}"></span></div>
+
+            <div>
+                Znacznik braku dostawy towarów lub świadczenia usług zwolnionych od podatku na podstawie art. 43 ust. 1, art. 113 ust. 1 i 9 ustawy albo
+                przepisów wydanych na podstawie art. 82 ust. 3 ustawy lub na podstawie innych przepisów -
+                <span class="value" th:text="${fa.fa.adnotacje.zwolnienie.p19N == 1 ? 'Tak' : 'Nie'}"></span>
+            </div>
+            <div th:if="${fa.fa.adnotacje.noweSrodkiTransportu.p22 == 1}">
+                Wewnątrzwspólnotowa dostawa nowych środków transportu: <span class="value">Tak</span>
+            </div>
+            <div th:if="${fa.fa.adnotacje.noweSrodkiTransportu.p22N == 1}">
+                Brak wewnątrzwspólnotowej dostawy nowych środków transportu: <span class="value">Tak</span>
+            </div>
+            <div>
+                VAT: Faktura WE uproszczona na mocy art. 135-138 ustawy o ptu. Podatek z tytułu dokonanej dostawy zostanie rozliczony przez ostatniego w
+                kolejności podatnika podatku od wartości dodanej:
+                <span class="value" th:text="${fa.fa.adnotacje.p23 == 1 ? 'Tak' : 'Nie'}"></span>
+            </div>
+            <div th:if="${fa.fa.adnotacje.pMarzy.PPMarzy == 1}">
+                Wystąpienie procedur marży, o których mowa w art. 119 lub art. 120 ustawy: <span class="value">Tak</span>
+            </div>
+            <div th:if="${fa.fa.adnotacje.pMarzy.PPMarzyN == 1}">
+                Brak wystąpienia procedur marży, o których mowa w art. 119 lub art. 120 ustawy: <span class="value">Tak</span>
+            </div>
+        </div>
+    </div>
+</div>

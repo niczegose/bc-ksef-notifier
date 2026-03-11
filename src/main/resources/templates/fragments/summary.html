@@ -1,0 +1,57 @@
+<div th:fragment="totals(fa)">
+    <div class="section-title">PODSUMOWANIE</div>
+    <table>
+        <tr>
+            <td>RAZEM NETTO:</td>
+            <td class="value" th:text="${fa.p131}"></td>
+        </tr>
+        <tr>
+            <td>KWOTA VAT:</td>
+            <td class="value" th:text="${fa.p141}"></td>
+        </tr>
+        <tr style="font-size: 11pt;">
+            <td><strong>DO ZAPŁATY:</strong></td>
+            <td class="value"><strong th:text="${fa.p15} + ' ' + ${fa.kodWaluty}"></strong></td>
+        </tr>
+    </table>
+
+    <div class="section-title">INFORMACJE O PŁATNOŚCI</div>
+    <table>
+        <tr>
+            <td style="width: 30%;">Termin płatności:</td>
+            <td class="value">
+                <div th:each="term : ${fa.platnosc.terminPlatnosci}">
+                    <span th:text="${term.termin}"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Forma płatności:</td>
+            <td class="value">
+                    <span th:if="${fa.platnosc.formaPlatnosci != null}" th:switch="${fa.platnosc.formaPlatnosci.intValue()}">
+                        <span th:case="1">Gotówka</span>
+                        <span th:case="2">Karta</span>
+                        <span th:case="3">Bon</span>
+                        <span th:case="4">Czek</span>
+                        <span th:case="5">Kredyt</span>
+                        <span th:case="6">Przelew</span>
+                        <span th:case="7">Mobilna</span>
+                    </span>
+                <div th:if="${fa.platnosc.platnoscInna == 1}">
+                    1 - inna forma płatności
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${fa.platnosc.rachunekBankowy != null}">
+            <td>Numer rachunku:</td>
+            <td class="value">
+                <div th:each="rb : ${fa.platnosc.rachunekBankowy}">
+                    <span th:text="${rb.nrRB}"></span>
+                    <span th:if="${rb.SWIFT != null}" th:text="' (SWIFT: ' + ${rb.SWIFT} + ')'"></span>
+                    <div th:if="${rb.nazwaBanku != null}"> <span th:text="${rb.nazwaBanku}"></span></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

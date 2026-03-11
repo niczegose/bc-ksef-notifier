@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl-PL">
+<head>
+    <meta charset="UTF-8"/>
+    <title>E-Faktura KSeF</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+            @bottom-right {
+                content: "Strona " counter(page) " z " counter(pages);
+                font-family: 'OpenSans Regular', sans-serif;
+                font-size: 8pt;
+                color: #666;
+            }
+        }
+
+        body {
+            font-family: 'OpenSans Regular', sans-serif;
+            font-size: 8pt;
+            line-height: 1.3;
+        }
+
+        .section-title {
+            background: #eee;
+            font-weight: bold;
+            padding: 3px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-top: 5px;
+            page-break-inside: avoid;
+            border: none;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 4px;
+            word-wrap: break-word;
+            vertical-align: top;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        .label {
+            color: #555;
+            font-size: 7pt;
+            display: block;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .section-separator {
+            border-top: 1px solid #000;
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header(${fa})}"></div>
+
+<table style="border: none; margin-top: 10px; width: 100%;">
+    <tr>
+        <td style="border: none; padding: 0; width: 49%; vertical-align: top;">
+            <div th:replace="~{fragments/parties :: seller(${fa.podmiot1})}"></div>
+        </td>
+        <td style="border: none; padding: 0; width: 2%;">&#160;</td>
+        <td style="border: none; padding: 0; width: 49%; vertical-align: top;">
+            <div th:replace="~{fragments/parties :: buyer(${fa.podmiot2})}"></div>
+        </td>
+    </tr>
+</table>
+
+<div th:replace="~{fragments/lines :: lines(${fa.fa.faWiersz})}"></div>
+
+<div th:replace="~{fragments/summary :: totals(${fa.fa})}"></div>
+
+<div th:replace="~{fragments/annotations :: annotations(${fa})}"></div>
+
+<div th:replace="~{fragments/additions :: description(${fa})}"></div>
+
+<div th:replace="~{fragments/settlement :: settlement(${fa})}"></div>
+<div th:replace="~{fragments/contracts :: contract(${fa})}"></div>
+<div th:replace="~{fragments/footer :: footer(${fa})}"></div>
+<div th:replace="~{fragments/attachment :: attachment(${fa})}"></div>
+
+<div th:replace="~{fragments/footer :: extras(${fa})}"></div>
+</body>
+</html>

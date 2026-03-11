@@ -12,6 +12,7 @@ This application periodically checks for new invoices in the KSeF system using t
 - **Email Notifications**: Sends HTML email notifications with:
   - Detailed invoice summaries (seller, buyer, amounts, dates)
   - Invoice XML files as attachments
+  - PDF visualizations (currently supported for VAT invoices only)
 - **Error Handling**:Sends error notifications via email on application failures
 
 ## Technology Stack
@@ -75,7 +76,8 @@ ksef:
 3. **Notification**:
    - Parses invoice XML to extract key information
    - Generates HTML email with invoice summaries
-   - Attaches original XML files
+   - Generates PDF visualization (currently enabled for VAT invoices only)
+   - Attaches original XML files and PDF visualizations
    - Sends email to configured recipients
 
 4. **Error Handling**:
@@ -148,9 +150,11 @@ Zestawienie faktur pobranych z KSeF:
 │ NR RACHUNKU BANKOWEGO        │       12 3456 7890 1234 5678 │
 └──────────────────────────────┴──────────────────────────────┘
 
-Wszystkie powyższe faktury zostały dołączone do niniejszej wiadomości w formacie XML.
+ Wszystkie powyższe faktury zostały dołączone do niniejszej wiadomości w formacie XML oraz wizualizacje faktur VAT w formacie PDF.
 
-Attachments: Faktura_1234567890-12345678-1234....xml
+Uwaga: Jeśli faktura jest innego typu niż VAT, np. KOR (korygująca) jej wizualizacja w formacie PDF nie jest (aktualnie) generowana
+
+Attachments: Faktura_1234567890-12345678-1234....xml, Faktura_1234567890-12345678-1234..._wizualizacja.pdf
 ```
 
 ## Dependencies Attribution

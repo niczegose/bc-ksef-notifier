@@ -20,15 +20,17 @@ import org.thymeleaf.context.Context;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmailService {
+class EmailService {
 
     private final JavaMailSender mailSender;
     private final KsefClientProperties ksefClientProperties;
     private final TemplateEngine templateEngine;
     @Value("${spring.mail.username}")
     private final String fromAddress;
+    @Value("${spring.application.version}")
+    private final String appVersion;
 
-    public void sendSuccessNotification(List<InvoiceSummary> invoices, Map<String, byte[]> attachments)
+    void sendSuccessNotification(List<InvoiceSummary> invoices, Map<String, byte[]> attachments)
         throws MessagingException, UnsupportedEncodingException {
         log.info("Wysyłanie powiadomienia e-mail o nowych fakturach");
         var message = mailSender.createMimeMessage();
@@ -40,6 +42,7 @@ public class EmailService {
 
         var context = new Context();
         context.setVariable("invoices", invoices);
+        context.setVariable("appVersion", appVersion);
         var htmlBody = templateEngine.process("mailTemplate", context);
         helper.setText(htmlBody, true);
 
@@ -50,7 +53,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendErrorNotification(String errorMessage, Exception ex) {
+    void sendErrorNotification(String errorMessage, Exception ex) {
         String content = "Podczas sprawdzania KSeF wystąpił błąd:\n\n" +
             "Komunikat: " + errorMessage + "\n" +
             "Szczegóły: " + ex.toString();

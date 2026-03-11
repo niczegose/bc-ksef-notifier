@@ -15,6 +15,7 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
 import pl.akmf.ksef.sdk.client.model.auth.ContextIdentifier;
+import pl.akmf.ksef.sdk.client.model.invoice.InvoiceMetadataInvoiceType;
 
 @Slf4j
 @Component
@@ -25,6 +26,7 @@ public class KsefCheckTasklet implements Tasklet {
     private final EmailService emailService;
     private final KsefClientProperties ksefClientProperties;
     private final KsefXmlParser ksefXmlParser;
+    private final KsefPdfCreator ksefPdfCreator;
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
@@ -49,6 +51,14 @@ public class KsefCheckTasklet implements Tasklet {
                 for (var invoice : invoices) {
                     byte[] xmlContent = ksefService.getInvoiceByKsefId(invoice.getKsefNumber(), sessionToken);
                     filesToEmail.put("Faktura_" + invoice.getKsefNumber() + ".xml", xmlContent);
+
+                    if (InvoiceMetadataInvoiceType.VAT == invoice.getInvoiceType()) {
+                        var pdfContent = ksefPdfCreator.convertToPdf(xmlContent, invoice);
+                        filesToEmail.put("Faktura_" + invoice.getKsefNumber() + "_wizualizacja.pdf", pdfContent);
+                    } else {
+                        log.info("Faktura innego typu niż VAT, pominięto generowanie wizualizacji PDF");
+                    }
+
                     invoiceSummaries.add(ksefXmlParser.parseXml(xmlContent, invoice));
                 }
 

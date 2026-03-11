@@ -1,0 +1,31 @@
+<div th:fragment="lines(wiersze)">
+    <div class="section-title">POZYCJE FAKTURY</div>
+    <table style="page-break-inside: auto; -fs-table-paginate: paginate;">
+        <thead>
+        <tr>
+            <th style="width: 30px;">Lp.</th>
+            <th style="width: 30%;">Nazwa</th>
+            <th>Ilość</th>
+            <th style="width: 30px;">J.m.</th>
+            <th>Cena netto</th>
+            <th>Wartość netto</th>
+            <th>Wartość brutto</th>
+            <th style="width: 30px;">Stawka VAT</th>
+            <th>Kwota VAT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="w : ${wiersze}">
+            <td th:text="${w.nrWierszaFa}"></td>
+            <td th:text="${w.p7}"></td>
+            <td th:text="${w.p8B}"></td>
+            <td th:text="${w.p8A}"></td>
+            <td th:text="${w.p9A}"></td>
+            <td th:text="${w.p11}"></td>
+            <td th:text="${w.p11A}"></td>
+            <td th:text="${w.p12}"></td>
+            <td th:text="${w.p11Vat}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

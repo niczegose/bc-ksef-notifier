@@ -1,0 +1,52 @@
+<div th:fragment="settlement(fa)">
+    <div th:if="${fa.fa.rozliczenie != null}">
+        <div class="section-title">Dodatkowe rozliczenia na fakturze</div>
+
+        <table th:if="${!fa.fa.rozliczenie.obciazenia.isEmpty()}">
+            <caption><br/> Obciążenia</caption>
+            <tr>
+                <th>Powód obciążenia</th>
+                <th>Kwota doliczona do kwoty należności ogółem</th>
+            </tr>
+            <tr th:each="opis : ${fa.fa.rozliczenie.obciazenia}">
+                <td th:text="${opis.powod}"></td>
+                <td th:text="${opis.kwota}"></td>
+            </tr>
+            <tr>
+                <td><span class="value">Suma obciążeń</span></td>
+                <td class="value" th:text="${fa.fa.rozliczenie.sumaObciazen}"></td>
+            </tr>
+        </table>
+
+        <table th:if="${!fa.fa.rozliczenie.odliczenia.isEmpty()}">
+            <caption><br/> Odliczenia</caption>
+            <tr>
+                <th>Powód odliczenia</th>
+                <th>Kwota odliczona do kwoty należności ogółem</th>
+            </tr>
+            <tr th:each="opis : ${fa.fa.rozliczenie.odliczenia}">
+                <td th:text="${opis.powod}"></td>
+                <td th:text="${opis.kwota}"></td>
+            </tr>
+            <tr>
+                <td><span class="value">Suma odliczeń</span></td>
+                <td class="value" th:text="${fa.fa.rozliczenie.sumaOdliczen}"></td>
+            </tr>
+        </table>
+
+        <div th:if="${fa.fa.rozliczenie.doZaplaty != null}">
+            <br/>
+            <b>Do zapłaty</b>
+            <br/>
+            <div>Kwota należności do zapłaty równa kwocie należności ogółem powiększonej o sumę obciążeń i pomniejszonej o sumę odliczeń:
+                <span class="value" th:text="${fa.fa.rozliczenie.doZaplaty}"></span></div>
+        </div>
+
+        <div th:if="${fa.fa.rozliczenie.doRozliczenia != null}">
+            <br/>
+            <b>Do rozliczenia</b>
+            <br/>
+            <div>Kwota nadpłacona do rozliczenia/zwrotu: <span class="value" th:text="${fa.fa.rozliczenie.doRozliczenia}"></span></div>
+        </div>
+    </div>
+</div>
