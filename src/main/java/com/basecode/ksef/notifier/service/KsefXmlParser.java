@@ -12,6 +12,7 @@ import pl.akmf.ksef.sdk.client.model.invoice.InvoiceMetadata;
 public class KsefXmlParser {
 
     public static final String PAYMENT_DUE_DATE_XPATH = "//*[local-name()='Platnosc']/*[local-name()='TerminPlatnosci']/*[local-name()='Termin']";
+    public static final String PAYMENT_DATE_XPATH = "//*[local-name()='Platnosc']/*[local-name()='DataZaplaty']";
     public static final String BANK_ACCOUNT_NUMBER_XPATH = "//*[local-name()='Platnosc']/*[local-name()='RachunekBankowy']/*[local-name()='NrRB']";
 
     public InvoiceSummary parseXml(byte[] xmlContent, InvoiceMetadata metadata) throws Exception {
@@ -20,8 +21,11 @@ public class KsefXmlParser {
         var xpath = XPathFactory.newInstance().newXPath();
 
         String dueDate = xpath.evaluate(PAYMENT_DUE_DATE_XPATH, doc);
+        if (dueDate.isBlank()) {
+            dueDate = xpath.evaluate(PAYMENT_DATE_XPATH, doc);
+        }
         String bankAccount = xpath.evaluate(BANK_ACCOUNT_NUMBER_XPATH, doc);
 
-        return new InvoiceSummary(metadata, LocalDate.parse(dueDate), bankAccount);
+        return new InvoiceSummary(metadata, dueDate.isBlank() ? null : LocalDate.parse(dueDate), bankAccount);
     }
 }

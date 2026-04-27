@@ -17,12 +17,19 @@
 
     <div class="section-title">INFORMACJE O PŁATNOŚCI</div>
     <table>
-        <tr>
+        <tr th:if="${fa.platnosc.terminPlatnosci != null && !fa.platnosc.terminPlatnosci.isEmpty()}">
             <td style="width: 30%;">Termin płatności:</td>
             <td class="value">
                 <div th:each="term : ${fa.platnosc.terminPlatnosci}">
                     <span th:text="${term.termin}"></span>
                 </div>
+            </td>
+        </tr>
+        <tr th:if="${fa.platnosc.zaplacono == 1}">
+            <td>Status płatności:</td>
+            <td class="value">
+                <span>Zapłacono</span>
+                <span th:if="${fa.platnosc.dataZaplaty != null}" th:text="' w dniu ' + ${fa.platnosc.dataZaplaty}"></span>
             </td>
         </tr>
         <tr>
@@ -42,7 +49,7 @@
                 </div>
             </td>
         </tr>
-        <tr th:if="${fa.platnosc.rachunekBankowy != null}">
+        <tr th:if="${fa.platnosc.rachunekBankowy != null && !fa.platnosc.rachunekBankowy.isEmpty()}">
             <td>Numer rachunku:</td>
             <td class="value">
                 <div th:each="rb : ${fa.platnosc.rachunekBankowy}">
